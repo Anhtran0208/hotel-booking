@@ -62,4 +62,10 @@ test ("should edit hotel", async({page}) => {
     await page.locator('[name="name"]').fill("Test hotel 3 updated")
     await page.getByRole("button", {name: "Save"}).click();
     await expect(page.getByText("Update hotel successfully")).toBeVisible()
+    await page.reload();
+    await expect(page.locator('[name="name"]')).toHaveValue("Test Hotel 3 Updated")
+    await page.locator('[name="name"]').fill("Test Hotel")
+    await page.getByRole("button", {name: "Save"}).click();
+
+
 })
