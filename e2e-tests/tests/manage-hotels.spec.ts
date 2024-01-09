@@ -43,7 +43,7 @@ test("should allow user to add hotel", async ({page}) => {
 
 test("should display hotels", async ({page}) => {
     await page.goto(`${UI_URL}my-hotels`);
-    await expect(page.getByRole('heading', {name: 'Test Hotel'})).toBeVisible();
+    await expect(page.getByRole('heading', {name: 'Test Hotel'}).first()).toBeVisible();
     await expect(page.getByText("Test description for test hotel")).toBeVisible();
     await expect(page.getByText("Test City, Test Country")).toBeVisible();
     await expect(page.getByText("$100 per night")).toBeVisible();
