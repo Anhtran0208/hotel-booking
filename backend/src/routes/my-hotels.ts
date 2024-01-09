@@ -16,6 +16,7 @@ const upload = multer({
     }
 })
 
+//Add hotel
 router.post("/", 
 verifyToken, [
     body("name").notEmpty().withMessage("Name is required"),
@@ -63,6 +64,7 @@ async (req: Request, res: Response) => {
     }
 })
 
+//View all hotels
 router.get("/", verifyToken, async(req: Request, res: Response) => {
     
     try{
@@ -70,6 +72,20 @@ router.get("/", verifyToken, async(req: Request, res: Response) => {
         res.json(hotels);
     } catch(error){
         res.status(500).json({message: "Error! Try again"})
+    }
+})
+
+//Edit hotel
+router.get("/:id", verifyToken, async(req: Request, res: Response) => {
+    const id = req.params.id.toString();
+    try {
+        const hotel = await Hotel.find({
+            _id: id,
+            userId: req.userId
+        })
+        res.json(hotel);
+    } catch(error) {
+        res.status(500).json({message: "Cannot edit hotel! Try again"})
     }
 })
 export default router;
