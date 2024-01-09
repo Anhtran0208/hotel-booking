@@ -53,3 +53,13 @@ test("should display hotels", async ({page}) => {
     await expect (page.getByRole("link", {name: "Add Hotel"})).toBeVisible();
     await expect (page.getByRole("link", {name: "View Details"})).toBeVisible();
 })
+
+test ("should edit hotel", async({page}) => {
+    await page.goto(`${UI_URL}my-hotels`);
+    await page.getByRole("link", { name: "View Details"}).click();
+    await page.waitForSelector('[name="name"]', {state: "attached"})
+    await expect(page.locator('[name="name"]')).toHaveValue('Test Hotel')
+    await page.locator('[name="name"]').fill("Test hotel 3 updated")
+    await page.getByRole("button", {name: "Save"}).click();
+    await expect(page.getByText("Update hotel successfully")).toBeVisible()
+})
