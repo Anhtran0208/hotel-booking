@@ -152,7 +152,15 @@ export const searchHotels = async(searchParams: SearchParams):Promise<HotelSearc
     return response.json()
 }
 
-export const fetchHotelById = async(hotelId: string) => {
+export const fetchHotels = async (): Promise<HotelType[]> => {
+    const response = await fetch(`${API_BASE_URL}/api/hotels`);
+    if (!response.ok){
+        throw new Error ("Error viewing hotels")
+    }
+    return response.json()
+}
+
+export const fetchHotelById = async(hotelId: string): Promise<HotelType> => {
     const response = await fetch(`${API_BASE_URL}/api/hotels/${hotelId}`)
     if (!response.ok){
         throw new Error("Error! Try again")

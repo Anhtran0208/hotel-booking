@@ -5,25 +5,6 @@ import { param, validationResult } from "express-validator";
 
 const router = express.Router();
 
-router.get("/:id", [
-    param("id").notEmpty().withMessage("Hotel ID is required")
-], 
-async (req: Request, res: Response) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array()})
-    }
-
-    const id = req.params.id.toString();
-    try {
-        const hotel = await Hotel.findById(id);
-        res.json(hotel)
-    } catch(e) {
-        console.log(e)
-        res.status(500).json({ message: "Error! Try again"})
-    }
-})
-
 router.get("/search", async (req: Request, res: Response) => {
     try {
         const query = constructSearchQuery(req.query);
@@ -62,6 +43,27 @@ router.get("/search", async (req: Request, res: Response) => {
         res.status(500).json({message: "Something went wrong"})
     }
 })
+
+router.get("/:id", [
+    param("id").notEmpty().withMessage("Hotel ID is required")
+], 
+async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array()})
+    }
+
+    const id = req.params.id.toString();
+    try {
+        const hotel = await Hotel.findById(id);
+        res.json(hotel)
+    } catch(e) {
+        console.log(e)
+        res.status(500).json({ message: "Error! Try again"})
+    }
+})
+
+
 
 const constructSearchQuery = (queryParams: any) => {
     let constructedQuery: any = {};
