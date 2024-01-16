@@ -1,3 +1,15 @@
+export type BookingType = {
+    _id: string;
+    userId: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    adultCount: number;
+    childrenCount: number;
+    checkIn: Date;
+    checkOut: Date;
+    totalCost: number;
+}
 export type HotelType = {
     _id: string;
     userId: string;
@@ -16,18 +28,7 @@ export type HotelType = {
     bookings: BookingType[];
 }
 
-export type BookingType = {
-    _id: string;
-    userId: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    adultCount: number;
-    childrenCount: number;
-    checkIn: Date;
-    checkOut: Date;
-    totalCost: number;
-}
+
 export type HotelSearchResponse = {
     data: HotelType[];
     pagination: {

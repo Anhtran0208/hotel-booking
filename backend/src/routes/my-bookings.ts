@@ -5,10 +5,10 @@ import Hotel from "../models/hotel";
 import { HotelType } from "../shared/types";
 
 const router = express.Router();
-router.get("/", verifyToken, async(req: Request, res: Response) => {
+router.get("/", verifyToken, async (req: Request, res: Response) => {
     try{
         const hotels = await Hotel.find({
-            bookings: {$elemMatch: {userId: req.userId}}
+            bookings: { $elemMatch: {userId: req.userId} }
         })
 
         const results = hotels.map((hotel) => {

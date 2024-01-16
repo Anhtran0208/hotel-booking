@@ -5,7 +5,7 @@ import { BookingFormData } from "./forms/BookingForm/BookingForm";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
-export const viewCurrentUser = async ():Promise<UserType> => {
+export const viewCurrentUser = async (): Promise<UserType> => {
     const response = await fetch(`${API_BASE_URL}/api/users/me`, {
         credentials: "include"
     })
@@ -14,6 +14,7 @@ export const viewCurrentUser = async ():Promise<UserType> => {
     }
     return response.json()
 }
+
 export const register = async (formData: RegisterFormData) => {
     const response = await fetch(`${API_BASE_URL}/api/users/register`, {
         method: 'POST',
@@ -209,4 +210,15 @@ export const createBooking = async(formData: BookingFormData) => {
     if (!response.ok){
         throw new Error("Error booking")
     }
+}
+
+export const viewBookings = async(): Promise<HotelType[]> => {
+    const response = await fetch(`${API_BASE_URL}/api/my-bookings`, {
+        credentials: "include",
+    })
+
+    if (!response.ok){
+        throw new Error("Cannot view your bookings")
+    }
+    return response.json();
 }
