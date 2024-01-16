@@ -79,7 +79,7 @@ async(req: Request, res: Response) => {
     const totalCost = hotel.pricePerNight * lengthOfStay;
 
     const paymentIntent = await stripe.paymentIntents.create({
-        amount: totalCost,
+        amount: totalCost * 100,
         currency: "usd",
         metadata: {
             hotelId,
@@ -127,7 +127,8 @@ async(req: Request, res: Response) => {
 
         const hotel = await Hotel.findOneAndUpdate(
             {_id: req.params.hotelId},
-            {$push: {bookings: newBooking}}
+            {$push: {bookings: newBooking}},
+            {new: true}
             )
         if (!hotel) {
             return res.status(400).json({message: "Hotel not found"})
