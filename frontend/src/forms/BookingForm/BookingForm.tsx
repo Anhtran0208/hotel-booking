@@ -1,8 +1,11 @@
 import { useForm } from "react-hook-form";
-import { UserType } from "../../../../backend/src/shared/types"
+import { PaymentIntentResponse, UserType } from "../../../../backend/src/shared/types"
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { StripeCardElement } from "@stripe/stripe-js";
 
 type Props = {
     currentUser: UserType;
+    paymentIntent: PaymentIntentResponse
 }
 
 type BookingFormData = {
@@ -11,7 +14,9 @@ type BookingFormData = {
     email: string
 }
 
-const BookingForm = ({ currentUser}: Props) => {
+const BookingForm = ({ currentUser, paymentIntent}: Props) => {
+    const stripe = useStripe();
+    const elements = useElements()
     const {handleSubmit, register} = useForm<BookingFormData>({
         defaultValues: {
             firstName: currentUser.firstName,
@@ -19,6 +24,21 @@ const BookingForm = ({ currentUser}: Props) => {
             email: currentUser.email
         }
     });
+
+    const onSubmit = async (formData: BookingFormData) => {
+        if (!stripe || !elements){
+            return;
+        }
+        const result = await stripe.confirmCardPayment(paymentIntent.clientSecret, {
+            payment_method: {
+                card: elements.getElement(CardElement) as StripeCardElement
+            }
+        })
+
+        if (result.paymentIntent?.status === "succeeded"){
+            
+        }
+    }
 
     return (
         <form className="grid grid-cols-1 gap-5 rounded-lg border border-slate-300 p-5">
@@ -57,6 +77,30 @@ const BookingForm = ({ currentUser}: Props) => {
                     />
                 </label>
             </div>
+
+            <div className="space-y-2">
+                <h2 className="text-xl font-semibold">
+                    Price Summary
+                </h2>
+
+                <div className="bg-blue-200 p-4 rounded-md">
+                <div className="font-semibold text-lg">
+                    Total cost: ${paymentIntent.totalCost.toFixed(2)}
+                </div>
+
+            </div>
+            </div>
+
+            <div className="space-y-2">
+                <h3 className="text-xl font-semibold">
+                    Payment Details
+                </h3>
+
+                <CardElement 
+                id="payment-element"
+                className="border rounded-md p-2 text-sm" />
+            </div>
+            
         </form>
     )
 }
