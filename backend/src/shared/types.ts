@@ -15,6 +15,7 @@ export type HotelType = {
     userId: string;
     name: string;
     city: string;
+    state: string;
     country: string;
     description: string;
     type: string;
