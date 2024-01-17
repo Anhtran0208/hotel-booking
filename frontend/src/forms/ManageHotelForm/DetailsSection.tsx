@@ -35,6 +35,17 @@ const DetailsSection = () => {
             </label>
 
             <label className="text-gray-700 text-sm font-bold flex-1">
+                    State
+                    <input 
+                    type="text"
+                    className="border rounded w-full py-1 px-2 font-normal"
+                    ></input>
+                    {errors.state && (
+                        <span className="text-red-500">{errors.state.message}</span>
+                    )}
+            </label>
+
+            <label className="text-gray-700 text-sm font-bold flex-1">
                     Country
                     <input 
                     type="text"
@@ -45,6 +56,8 @@ const DetailsSection = () => {
                         <span className="text-red-500">{errors.country.message}</span>
                     )}
             </label>
+
+            
             </div>
 
             <label className="text-gray-700 text-sm font-bold flex-1">
