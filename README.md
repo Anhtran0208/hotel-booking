@@ -1,7 +1,7 @@
 # StaySavvy 
 MERN stack web app to search hotels and make payments to book hotels
-## About StaySavvy 
-This project is still in progress, so stay tuned for updated functionalities and complete deployment. 
+## About StaySavvy
+Visit the website: https://stay-savvy.onrender.com/
 ## Technologies
 * Frontend: Vite, TypeScript
 * Backend: Node.js, Express.js
